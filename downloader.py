@@ -1,6 +1,7 @@
 from ftplib import FTP
 import pysftp
 import requests
+import sys
 
 
 def get_filename_from_url(url):
@@ -39,11 +40,17 @@ def ftp_download(filename, path, username=None, password=None):
 
 def http_download(url, path):
     filename = get_filename_from_url(url)
-    r = requests.get(url)
+    r = requests.get(url, stream=True)
+    content_length = r.headers['Content-Length']
+    total = 0
     with open(path + filename, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
             if chunk:  # filter out keep-alive new chunks
+                total += len(chunk)
                 f.write(chunk)
+                print sys.getsizeof(f)
+    print total, content_length
+    print total == int(content_length)
     return
 
 protocol_dispatch = {
@@ -55,6 +62,6 @@ protocol_dispatch = {
 print get_filename_from_url("http://my.file.com/file")
 print get_protocol_from_url("http://something.com/myfile")
 
-sftp_download("test.rebex.net/readme.txt", "/Users/ryhamz/Desktop/")
-#url = "http://github.com/kennethreitz/requests/tarball/master"
-#protocol_dispatch[get_protocol_from_url(url)](url, "/Users/ryhamz/Desktop/")
+#sftp_download("test.rebex.net/readme.txt", "/Users/ryhamz/Desktop/")
+url = "http://github.com/kennethreitz/requests/tarball/master"
+protocol_dispatch[get_protocol_from_url(url)](url, "/Users/ryhamz/Desktop/")
