@@ -18,6 +18,10 @@ python dependencies: `python downloader.py [URL] [target_path]`
 
 `bash entrypoint.sh [url_list.txt] [target_path]`
 
+### Run tests
+
+`python tests.py`
+
 Consider:
 
 ### The program should extensible to support different protocols

@@ -132,12 +132,6 @@ protocol_dispatch = {
 }
 
 if __name__ == "__main__":
-    # print get_filename_from_url("http://my.file.com/file")
-    # print get_protocol_from_url("http://something.com/myfile")
-
-    # ftp_download("sftp://test.rebex.net/readme.txt",
-    #            "/Users/ryhamz/Desktop/", "demo", "password")
-    # url = "http://github.com/kennethreitz/requests/tarball/master"
     url = sys.argv[1]
     output_directory = sys.argv[2]
     protocol_dispatch[get_protocol_from_url(url)](
