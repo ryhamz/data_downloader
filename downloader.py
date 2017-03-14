@@ -23,6 +23,12 @@ def get_address_from_url(url):
     return url.split("://")[1].split('/')[0]
 
 
+def get_ftp_path_from_url(url):
+    res = url.split("://")[1].split('/')[1:]
+    res.pop()
+    return '/'.join(res) + '/'
+
+
 def remove_data(path, filename):
     # Remove a file at the given path.
     # Will be used to remove incomplete data after partial downloads
@@ -33,12 +39,12 @@ def remove_data(path, filename):
 def sftp_download(url, path, username='demo', password='password'):
     filename = get_filename_from_url(url)
     address = get_address_from_url(url)
-
+    remote_path = get_ftp_path_from_url(url)
+    print remote_path
     with pysftp.Connection(address, username=username, password=password) as sftp:
-        print sftp.exists('readme.txt')
         try:
             print "sftp output: "
-            print sftp.get(filename,  localpath=path + filename,)
+            print sftp.get(remote_path + filename,  localpath=path + filename,)
             print "end sftp output"
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -53,13 +59,15 @@ def sftp_download(url, path, username='demo', password='password'):
 def ftp_download(url, path, username='demo', password='password'):
     filename = get_filename_from_url(url)
     address = get_address_from_url(url)
+    remote_path = get_ftp_path_from_url(url)
 
     ftp = FTP(address)
     ftp.login(user=username, passwd=password)
 
     local_file = open(path + filename, 'wb')
     try:
-        ftp.retrbinary('RETR ' + filename, local_file.write, 1024)
+        ftp.retrbinary('RETR ' + remote_path +
+                       filename, local_file.write, 1024)
     except:
         print "Unexpected error:", sys.exc_info()[0]
         remove_data(path, filename)
