@@ -40,12 +40,10 @@ def sftp_download(url, path, username='demo', password='password'):
     filename = get_filename_from_url(url)
     address = get_address_from_url(url)
     remote_path = get_ftp_path_from_url(url)
-    print remote_path
+
     with pysftp.Connection(address, username=username, password=password) as sftp:
         try:
-            print "sftp output: "
-            print sftp.get(remote_path + filename,  localpath=path + filename,)
-            print "end sftp output"
+            sftp.get(remote_path + filename,  localpath=path + filename,)
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
             remove_data(path, filename)
@@ -91,13 +89,34 @@ def http_download(url, path):
                 if chunk:  # filter out keep-alive new chunks
                     total += len(chunk)
                     f.write(chunk)
-                    print sys.getsizeof(f)
     except:
         print "Unexpected error:", sys.exc_info()[0]
         remove_data(path, filename)
         return 1
-    print total, content_length
-    print total == int(content_length)
+
+    if not total == int(content_length):
+        remove_data(path, filename)
+    return 0
+
+
+def https_download(url, path):
+    filename = get_filename_from_url(url)
+
+    r = requests.get(url, stream=True)
+    content_length = r.headers['Content-Length']
+    total = 0
+    try:
+        with open(path + filename, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024):
+                if chunk:  # filter out keep-alive new chunks
+                    total += len(chunk)
+                    f.write(chunk)
+
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
+        remove_data(path, filename)
+        return 1
+
     if not total == int(content_length):
         remove_data(path, filename)
     return 0
@@ -108,7 +127,8 @@ def http_download(url, path):
 protocol_dispatch = {
     "http": http_download,
     "ftp": ftp_download,
-    "sftp": sftp_download
+    "sftp": sftp_download,
+    "https": https_download
 }
 
 if __name__ == "__main__":

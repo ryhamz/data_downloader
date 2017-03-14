@@ -12,7 +12,7 @@ GNU parallel: `apt-get install parallel`
 
 ### Call the script on its own: 
 
-`python downloader.py [URL] [target_path]`
+python dependencies: `python downloader.py [URL] [target_path]`
 
 ### Call with the use of GNU parallel and an input list of URLs:
 
@@ -20,21 +20,21 @@ GNU parallel: `apt-get install parallel`
 
 Consider:
 
-## The program should extensible to support different protocols
+### The program should extensible to support different protocols
 
 Approach: dispatch table with protocols as keys and handlers as values. 
 Just need to write a handler and update the table (1 line).
 
-## Some sources might very big (more than memory)
+### Some sources might very big (more than memory)
 
 Approach: make use of streaming and ensure our block size is not too large.
 
-## Some sources might be very slow, while others might be fast
+### Some sources might be very slow, while others might be fast
 
 Make use of threads via GNU parallel to run n jobs at once. By using this,
 we can have, for example, 5 fast sources finish while 2 slow ones are downloading in parallel.
 
-## Some sources might fail in the middle of download. \
+### Some sources might fail in the middle of download. \
 We don't want to have partial data in the final location in any case.
 
 Approach: If there are exceptions during a download or the size of the download 
