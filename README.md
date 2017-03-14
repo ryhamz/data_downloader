@@ -28,8 +28,8 @@ Approach: make use of streaming and ensure our block size is not too large.
 Make use of threads via GNU parallel to run n jobs at once. By using this,
 we can have, for example, 5 fast sources finish while 2 slow ones are downloading in parallel.
 
-## Some sources might fail in the middle of download. 
-## We don't want to have partial data in the final location in any case.
+## Some sources might fail in the middle of download. \
+We don't want to have partial data in the final location in any case.
 
 Approach: If there are exceptions during a download or the size of the download 
 is smaller than what is expected in the header, trigger file removal.
