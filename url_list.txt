@@ -1,3 +1,11 @@
 sftp://test.rebex.net/readme.txt
 http://github.com/kennethreitz/requests/tarball/master
 ftp://test.rebex.net/pub/example/ConsoleClient.png
+ftp://test.rebex.net/pub/example/pop3-console-client.png
+sftp://test.rebex.net/pub/example/ConsoleClientSmall.png
+ftp://test.rebex.net/pub/example/FtpDownloader.png
+sftp://test.rebex.net/pub/example/mail-editor.png
+ftp://test.rebex.net/pub/example/KeyGenerator.png
+ftp://test.rebex.net/pub/example/KeyGeneratorSmall.png
+sftp://test.rebex.net/pub/example/WinFormClientSmall.png
+ftp://test.rebex.net/pub/example/WinFormClient.png

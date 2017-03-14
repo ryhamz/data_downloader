@@ -23,7 +23,7 @@ class get_filename_from_url_tests(unittest.TestCase):
     def test_filename_2(self):
         res = downloader.get_filename_from_url(
             "ftp://my.path.to/otherfile.txt")
-        self.assertNotEqual(res, "ftp")
+        self.assertNotEqual(res, "otherfile")
 
 
 def main():
