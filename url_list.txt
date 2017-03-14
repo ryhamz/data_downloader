@@ -1,0 +1,3 @@
+sftp://test.rebex.net/readme.txt
+http://github.com/kennethreitz/requests/tarball/master
+ftp://test.rebex.net/readme.txt
