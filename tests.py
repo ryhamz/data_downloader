@@ -26,6 +26,18 @@ class get_filename_from_url_tests(unittest.TestCase):
         self.assertNotEqual(res, "otherfile")
 
 
+class ftp_tester(unittest.TestCase):
+    pass
+
+
+class sftp_tester(unittest.TestCase):
+    pass
+
+
+class http_tester(unittest.TestCase):
+    pass
+
+
 def main():
     unittest.main()
 
