@@ -4,6 +4,12 @@ The list of sources will be given as input in the form of urls (e.g. http://my.f
 
 This module downloads all the sources to a configurable locations.
 
+### Installing Dependencies
+
+GNU parallel: `apt-get install parallel`
+
+`pip install -r requirements.txt`
+
 ### Call the script on its own: 
 
 `python downloader.py [URL] [target_path]`
